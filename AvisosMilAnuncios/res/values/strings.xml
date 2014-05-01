@@ -6,5 +6,6 @@
     <string name="title_section2">Agregar avisos</string>
     <string name="title_section3">Elminar avisos</string>
     <string name="action_settings">Settings</string>
+    <string name="BotonIniciar">Start</string>
 
 </resources>

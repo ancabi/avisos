@@ -136,7 +136,7 @@ public class Buscador implements Serializable{
 		//es la primera vez que lo busco o no, de esta manera
 		//puedo saber si hace falta avisar por cada nueva coincidencia
 		
-		carpeta=new File(sd.getAbsolutePath()+"/"+categoria);
+		carpeta=new File(sd.getAbsolutePath()+"/anuncios/"+categoria);
 		Log.e("ancabi", carpeta.getAbsolutePath());
 		if(!carpeta.exists()){
 			carpeta.mkdir();

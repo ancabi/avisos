@@ -30,9 +30,8 @@ public class AvisosFragment extends ListFragment {
 
 	private ArrayList<String> list;
     
-    private transient ArrayAdapter<String> adapter;
-    private transient ListView listView;
-    private transient View rootView;
+    private ArrayAdapter<String> adapter;
+    private View rootView;
 
 
 	@Override
@@ -71,20 +70,6 @@ public class AvisosFragment extends ListFragment {
 				
 			}
 		});
-        
-        Button buttonOne = (Button) rootView.findViewById(R.id.button1);
-        buttonOne.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-            	((MainActivity) v.getContext()).putaso();
-            }
-        });
-        
-        Button buttonTwo = (Button) rootView.findViewById(R.id.button2);
-        buttonTwo.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-            	((MainActivity) v.getContext()).checkIfServiceIsRunning();
-            }
-        });
          
         return rootView;
     }
@@ -114,8 +99,7 @@ public class AvisosFragment extends ListFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				//Toast.makeText(mainActivity, ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-				
+
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.setData(Uri.parse((String) ((TextView) view).getText()));
 				startActivity(intent);
