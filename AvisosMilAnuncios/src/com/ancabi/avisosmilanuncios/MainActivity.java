@@ -20,12 +20,15 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
@@ -74,7 +77,15 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
+        	Log.e("puto", "Se llama a onserviceConnected");
             mService = new Messenger(service);
+            try {
+                Message msg = Message.obtain(null, 1);
+                msg.replyTo = mMessenger;
+                mService.send(msg);
+            } catch (RemoteException e) {
+                // In this case the service has crashed before we could even do anything with it
+            }
             //textStatus.setText("Attached.");
             
         }
@@ -132,20 +143,17 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 					.setTabListener(this));
 		}
 		
-		Intent in = new Intent(MainActivity.this,ServiceBuscador.class);
-        in.putExtra("url", "http://www.milanuncios.com/bmw-de-segunda-mano/?hasta=6000&anod=2002&kms=160000&combustible=diesel");
-		if(!ServiceBuscador.isRunning())
-            MainActivity.this.startService(in);
-		
-		checkIfServiceIsRunning();
+		//checkIfServiceIsRunning();
 	}
 	
 	private void sendMessageToService(int intvaluetosend) {
         if (mIsBound) {
+        	Log.e("ancabi", ""+(mService!=null));
             if (mService != null) {
                 try {
                     Message msg = Message.obtain(null, 1, intvaluetosend, 0);
                     msg.replyTo = mMessenger;
+                    Log.e("ancabi", ""+mMessenger);
                     mService.send(msg);
                 } catch (RemoteException e) {
                 }
@@ -153,8 +161,18 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         }
     }
 	
-	private void checkIfServiceIsRunning() {
+	public void putaso(){
+		Intent in = new Intent(MainActivity.this,ServiceBuscador.class);
+        in.putExtra("url", "http://www.milanuncios.com/bmw-de-segunda-mano/?hasta=6000&anod=2002&kms=160000&combustible=diesel");
+		if(!ServiceBuscador.isRunning())
+            MainActivity.this.startService(in);
+		
+		//checkIfServiceIsRunning();
+	}
+	
+	public void checkIfServiceIsRunning() {
         //If the service is running when the activity starts, we want to automatically bind to it.
+		Log.e("ancabi", ""+ServiceBuscador.isRunning());
         if (ServiceBuscador.isRunning()) {
             doBindService();
             sendMessageToService(1);
@@ -287,6 +305,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 					.findViewById(R.id.section_label);
 			textView.setText(Integer.toString(getArguments().getInt(
 					ARG_SECTION_NUMBER)));
+			
+			
 			return rootView;
 		}
 	}

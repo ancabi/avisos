@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.app.Activity;
 import android.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -69,6 +71,20 @@ public class AvisosFragment extends ListFragment {
 				
 			}
 		});
+        
+        Button buttonOne = (Button) rootView.findViewById(R.id.button1);
+        buttonOne.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+            	((MainActivity) v.getContext()).putaso();
+            }
+        });
+        
+        Button buttonTwo = (Button) rootView.findViewById(R.id.button2);
+        buttonTwo.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+            	((MainActivity) v.getContext()).checkIfServiceIsRunning();
+            }
+        });
          
         return rootView;
     }

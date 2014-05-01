@@ -25,4 +25,23 @@
         android1:layout_alignRight="@id/android:list"
         android1:src="@drawable/ic_action_borrar" />
 
+    <Button
+        android1:id="@+id/button1"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignTop="@+id/imageButton1"
+        android1:layout_marginRight="38dp"
+        android1:layout_toLeftOf="@+id/imageButton1"
+        android1:text="Button" />
+
+    <Button
+        android1:id="@+id/button2"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignBaseline="@+id/button1"
+        android1:layout_alignBottom="@+id/button1"
+        android1:layout_marginRight="20dp"
+        android1:layout_toLeftOf="@+id/button1"
+        android1:text="Buttona" />
+
 </RelativeLayout>
