@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -23,6 +24,7 @@ public class ServiceBuscador extends Service{
 	final Messenger mMessenger = new Messenger(new IncomingHandler());
     static Messenger MessMain;
     private Buscador buscador;
+    
     
 	public ServiceBuscador(){
 		super();
@@ -85,7 +87,28 @@ public class ServiceBuscador extends Service{
 			buscador = new Buscador(url);
 			lanzarNotificacion();
 			
-			
+			CountDownTimer t = new CountDownTimer( Long.MAX_VALUE , 120000) {
+
+		        // This is called every interval. (Every 10 seconds in this example)
+		        public void onTick(long millisUntilFinished) {
+		            try {
+						lanzarNotificacion();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		        }
+
+		        public void onFinish() {
+		        	try {
+						lanzarNotificacion();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}        
+		            start();
+		        }
+		     }.start();
 			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
