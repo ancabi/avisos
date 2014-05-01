@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import buscador.Buscador;
+import android.app.AlarmManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -83,6 +84,8 @@ public class ServiceBuscador extends Service{
 			String url=intent.getStringExtra("url");
 			buscador = new Buscador(url);
 			lanzarNotificacion();
+			
+			
 			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

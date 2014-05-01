@@ -167,6 +167,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		if(!ServiceBuscador.isRunning())
             MainActivity.this.startService(in);
 		
+		bindService(in, mConnection, Context.BIND_AUTO_CREATE);
+		mIsBound=true;
+		sendMessageToService(1);
+		
 		//checkIfServiceIsRunning();
 	}
 	
