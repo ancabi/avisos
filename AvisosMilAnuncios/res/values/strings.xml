@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AvisosMilAnuncios</string>
+    <string name="title_section1">Avisos</string>
+    <string name="title_section2">Agregar avisos</string>
+    <string name="title_section3">Elminar avisos</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
