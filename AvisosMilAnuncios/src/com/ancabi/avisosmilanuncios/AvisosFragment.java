@@ -30,9 +30,8 @@ public class AvisosFragment extends ListFragment {
 
 	private ArrayList<String> list;
     
-    private transient ArrayAdapter<String> adapter;
-    private transient ListView listView;
-    private transient View rootView;
+	 private ArrayAdapter<String> adapter;
+	 private View rootView;
 
 
 	@Override

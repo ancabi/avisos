@@ -8,6 +8,9 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +22,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
@@ -58,6 +62,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	boolean mIsBound=false;
 	
 	final Messenger mMessenger = new Messenger(new IncomingHandler());
+	
+	static boolean active = false;
+	
+	NotificationManager nm;
 
     class IncomingHandler extends Handler {
         @Override
@@ -67,11 +75,60 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             ArrayList<String> nuevos=b.getStringArrayList("nuevos");
             ArrayList<String> rebajados=b.getStringArrayList("rebajados");
             
-            if(!nuevos.isEmpty())
+            if(!nuevos.isEmpty()){
             	avisos.addItems(nuevos, main);
+            	Intent notificationIntent = new Intent(main, MainActivity.class);
+            	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				
+				PendingIntent contentIntent = PendingIntent.getActivity(main, 0, notificationIntent, 0);
+				
+				Notification notificacion = new NotificationCompat.Builder(main)
+		         .setContentTitle("Nuevos anuncios")
+		         .setContentText("Tiene "+nuevos.size()+" nuevos anuncios de BMW")
+		         .setSmallIcon(R.drawable.ic_launcher)
+		         .setContentIntent(contentIntent)
+		         .build();
+				
+				notificacion.defaults |= Notification.DEFAULT_VIBRATE;
+				
+				notificacion.defaults |= Notification.DEFAULT_SOUND;
+				
+				notificacion.defaults |= Notification.FLAG_AUTO_CANCEL;
+				
+				notificacion.defaults |= Notification.FLAG_ONLY_ALERT_ONCE;
+				
+				
+				
+				nm.notify(1, notificacion);
+            }
             
-            if(!rebajados.isEmpty())
+            if(!rebajados.isEmpty()){
             	avisos.addItems(rebajados, main);
+            	Intent notificationIntent = new Intent(main, MainActivity.class);
+				
+            	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            	
+				PendingIntent contentIntent = PendingIntent.getActivity(main, 0, notificationIntent, 0);
+				
+		        Notification notificacion = new NotificationCompat.Builder(main)
+		         .setContentTitle("Anuncios rebajados")
+		         .setContentText("Tiene "+rebajados.size()+" nuevos anuncios rebajados de BMW")
+		         .setSmallIcon(R.drawable.ic_launcher)
+		         .setContentIntent(contentIntent)
+		         .build();
+				
+				notificacion.defaults |= Notification.DEFAULT_VIBRATE;
+				
+				notificacion.defaults |= Notification.DEFAULT_SOUND;
+				
+				notificacion.defaults |= Notification.FLAG_AUTO_CANCEL;
+				
+				notificacion.defaults |= Notification.FLAG_ONLY_ALERT_ONCE;
+				
+				
+				
+				nm.notify(2, notificacion);
+            }
         }
     }
     
@@ -143,6 +200,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 					.setTabListener(this));
 		}
 		
+		nm=(NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
+		
 		//checkIfServiceIsRunning();
 	}
 	
@@ -172,6 +231,24 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		sendMessageToService(1);
 		
 		//checkIfServiceIsRunning();
+	}
+	
+	@Override
+	public void onStart(){
+		
+		super.onStart();
+		
+		this.active=true;
+		
+	}
+	
+	@Override
+	public void onStop(){
+		
+		super.onStop();
+		
+		this.active=false;
+		
 	}
 	
 	public void checkIfServiceIsRunning() {

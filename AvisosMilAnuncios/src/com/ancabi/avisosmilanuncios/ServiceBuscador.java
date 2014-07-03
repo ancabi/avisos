@@ -55,6 +55,16 @@ public class ServiceBuscador extends Service{
 		Message msg = Message.obtain();
 		msg.setData(b);
 		try {
+			
+			if(!MainActivity.active){
+				
+				
+				Intent dialogIntent = new Intent(this, MainActivity.class);
+				dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				this.startActivity(dialogIntent);
+				
+			}
+			
 			MessMain.send(msg);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
