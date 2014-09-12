@@ -45,7 +45,7 @@ public class ServiceBuscador extends Service{
             
                 MessMain=msg.replyTo;
                 
-                //super.handleMessage(msg);
+                ///super.handleMessage(msg);
             
         }
     }

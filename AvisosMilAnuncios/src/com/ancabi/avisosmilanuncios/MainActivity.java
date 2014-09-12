@@ -252,7 +252,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	}
 	
 	public void checkIfServiceIsRunning() {
-        //If the service is running when the activity starts, we want to automatically bind to it.
+        ///If the service is running when the activity starts, we want to automatically bind to it.
 		Log.e("ancabi", ""+ServiceBuscador.isRunning());
         if (ServiceBuscador.isRunning()) {
             doBindService();
