@@ -159,6 +159,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		this.active=true;
+		
 		if(savedInstanceState==null){
         	avisos=new AvisosFragment();
 

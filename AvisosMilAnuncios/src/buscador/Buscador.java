@@ -16,7 +16,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-
 import android.os.Environment;
 import android.util.Log;
 
@@ -115,16 +114,15 @@ public class Buscador implements Serializable{
 	public void getNumberPages(){
 		
 		
-		Elements e=doc.select(".cat1");
+		Elements e=doc.select("tbody");
+		//System.out.println(doc.toString());
 
 		//se leen la cantidad de paginas que hay en la busqueda
 		if(e.text().equals("")){
-			numPaginas=0;
-		}else if(e.text().length()<15){
-			numPaginas=Integer.parseInt(e.text().substring(12, 13));
-		}else if(e.text().length()==15){
-			//numPaginas=Integer.parseInt(e.text().substring(12, 14));
-			numPaginas=2;
+			numPaginas=1;
+		}else{
+			//LA ULTIMA PAGINA ESTA VACIA POR LO TANTO TIENE QUE LEER UNA MENOS DE 11, 10 a 12,13 
+			numPaginas=Integer.parseInt(e.text().substring(e.text().length()-13, e.text().length()-12));
 		}
 		
 	}
@@ -236,11 +234,11 @@ public class Buscador implements Serializable{
 		}
 		
 		//voy conectadome a las paginas del anuncio
-		for(int y=0; y<=numPaginas; y++){
+		for(int y=0; y<numPaginas; y++){
 			
 			//cuando no sea la primera pagina me descargo la siguiente
 			if(y!=0){
-				connect(y+1);
+				connect(y);
 			}
 		
 			//busco las clases donde vienen los id
@@ -252,7 +250,7 @@ public class Buscador implements Serializable{
 			for(int x=0; x<x5.size(); x++){
 				
 				String anuncio=x5.get(x).text();
-				String precioSinSigno=pr.get(x).text().substring(0, pr.get(x).text().length()-8);
+				String precioSinSigno=pr.get(x).text().substring(0, pr.get(x).text().length()-1);
 				precioSinSigno=precioSinSigno.replace(".", "");
 				int precio=Integer.parseInt(precioSinSigno);
 				
